@@ -29,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
 
     ListView photoListView;
     RequestQueue queue;
+    PhotoAdapter photoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
         String url = "http://puhaar.jp/api/v1/photos";
         queue = Volley.newRequestQueue(this);
         final ArrayList<Photo> photos = new ArrayList<Photo>();
-        PhotoAdapter photoAdapter = new PhotoAdapter(this, 0, photos, queue);
+        photoAdapter = new PhotoAdapter(this, 0, photos, queue);
 
         photoListView = (ListView)findViewById(R.id.photo_list_view);
         photoListView.setAdapter(photoAdapter);
@@ -74,6 +75,7 @@ public class MainActivity extends ActionBarActivity {
                         e.printStackTrace();
                     }
                 }
+                photoAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
