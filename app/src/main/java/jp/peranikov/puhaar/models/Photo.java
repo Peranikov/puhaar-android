@@ -10,6 +10,7 @@ public class Photo {
     private String comment;
     private Integer id;
     private String url;
+    private User user;
 
     public Integer id() {
         return this.id;
@@ -44,6 +45,15 @@ public class Photo {
 
     public Photo url(String url) {
         this.url = url;
+        return this;
+    }
+
+    public User user() {
+        return this.user;
+    }
+
+    public Photo user(User user) {
+        this.user = user;
         return this;
     }
 }

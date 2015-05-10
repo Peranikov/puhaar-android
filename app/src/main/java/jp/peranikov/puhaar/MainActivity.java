@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import jp.peranikov.puhaar.factories.PhotoFactory;
 import jp.peranikov.puhaar.models.Photo;
 import jp.peranikov.puhaar.views.adapters.PhotoAdapter;
 
@@ -56,19 +57,7 @@ public class MainActivity extends ActionBarActivity {
                 for (int i = 0; i < response.length(); i++ ) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
-
-                        Integer id = jsonObject.getInt("id");
-                        String url = jsonObject.getJSONObject("image").getString("thumb_url");
-                        String comment  = jsonObject.getString("comment");
-
-                        Photo photo = new Photo();
-                        photo
-                            .id(id)
-                            .image(BitmapFactory.decodeResource(getResources(), R.drawable.abc_ic_ab_back_mtrl_am_alpha))
-                            .url(url)
-                            .comment(comment);
-
-                        photos.add(photo);
+                        photos.add(PhotoFactory.create(jsonObject));
 
                     } catch (JSONException e) {
                         Log.d("Erorr:", e.getMessage());
