@@ -58,7 +58,7 @@ public class MainActivity extends ActionBarActivity {
                         JSONObject jsonObject = response.getJSONObject(i);
 
                         Integer id = jsonObject.getInt("id");
-                        String url = jsonObject.getJSONObject("image").getString("url");
+                        String url = jsonObject.getJSONObject("image").getString("thumb_url");
                         String comment  = jsonObject.getString("comment");
 
                         Photo photo = new Photo();

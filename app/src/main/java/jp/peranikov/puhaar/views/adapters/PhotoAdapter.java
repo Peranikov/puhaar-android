@@ -55,19 +55,20 @@ public class PhotoAdapter extends ArrayAdapter<Photo> {
                 holder.imageView,
                 android.R.drawable.spinner_background,
                 android.R.drawable.ic_dialog_alert);
-        Log.v("photo", url);
-
-
         mImageLoader.get(url, listener);
+
+        holder.commentView.setText(photo.comment());
 
         return convertView;
     }
 
     static class ViewHolder {
         ImageView imageView;
+        TextView commentView;
 
         public ViewHolder(View view) {
             this.imageView = (ImageView)view.findViewById(R.id.imageview);
+            this.commentView = (TextView)view.findViewById(R.id.commentview);
         }
     }
 }
