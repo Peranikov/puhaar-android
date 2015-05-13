@@ -1,79 +1,20 @@
 package jp.peranikov.puhaar;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import jp.peranikov.puhaar.factories.PhotoFactory;
-import jp.peranikov.puhaar.models.Photo;
-import jp.peranikov.puhaar.views.adapters.PhotoAdapter;
+import jp.peranikov.puhaar.fragments.PhotoFragment;
 
 
-public class MainActivity extends ActionBarActivity {
-
-    ListView photoListView;
-    RequestQueue queue;
-    PhotoAdapter photoAdapter;
+public class MainActivity extends ActionBarActivity implements PhotoFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        request();
-    }
-
-    private void request() {
-        final String tag_json_obj = "json_obj_req";
-
-        String url = "http://puhaar.jp/api/v1/photos";
-        queue = Volley.newRequestQueue(this);
-        final ArrayList<Photo> photos = new ArrayList<Photo>();
-        photoAdapter = new PhotoAdapter(this, 0, photos, queue);
-
-        photoListView = (ListView)findViewById(R.id.photo_list_view);
-        photoListView.setAdapter(photoAdapter);
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++ ) {
-                    try {
-                        JSONObject jsonObject = response.getJSONObject(i);
-                        photos.add(PhotoFactory.create(jsonObject));
-
-                    } catch (JSONException e) {
-                        Log.d("Erorr:", e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-                photoAdapter.notifyDataSetChanged();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(tag_json_obj, "Error: " + error.getMessage());
-            }
-        });
-
-        AppController.getInstance().addToRequestQueue(jsonArrayRequest, tag_json_obj);
+//        request();
     }
 
     @Override
@@ -96,5 +37,11 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onFragmentInteraction(String id) {
+
     }
 }
