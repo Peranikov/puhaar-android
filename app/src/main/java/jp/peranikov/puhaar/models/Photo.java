@@ -11,7 +11,8 @@ public class Photo implements Serializable {
     private Bitmap image;
     private String comment;
     private Integer id;
-    private String url;
+    private String imageUrl;
+    private String thumbUrl;
     private User user;
 
     public Integer id() {
@@ -41,12 +42,21 @@ public class Photo implements Serializable {
         return this;
     }
 
-    public String url() {
-        return this.url;
+    public String imageUrl() {
+        return this.imageUrl;
     }
 
-    public Photo url(String url) {
-        this.url = url;
+    public Photo imageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public String thumbUrl() {
+        return this.thumbUrl;
+    }
+
+    public Photo thumbUrl(String thumbUrl) {
+        this.thumbUrl = thumbUrl;
         return this;
     }
 

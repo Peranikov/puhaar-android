@@ -63,7 +63,7 @@ public class PhotoDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_photo_detail, container, false);
         mImageView = (ImageView)view.findViewById(R.id.imageview);
-        Glide.with(this).load(mPhoto.url()).into(mImageView);
+        Glide.with(this).load(mPhoto.imageUrl()).into(mImageView);
         return view;
     }
 

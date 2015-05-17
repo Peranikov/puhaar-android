@@ -10,14 +10,16 @@ import jp.peranikov.puhaar.models.Photo;
  */
 public class PhotoFactory {
     public static Photo create(JSONObject jsonObject) throws JSONException {
-        Integer id     = jsonObject.getInt("id");
-        String url     = jsonObject.getJSONObject("image").getString("thumb_url");
-        String comment = jsonObject.getString("comment");
+        Integer id      = jsonObject.getInt("id");
+        String imageUrl = jsonObject.getJSONObject("image").getString("url");
+        String thumbUrl = jsonObject.getJSONObject("image").getString("thumb_url");
+        String comment  = jsonObject.getString("comment");
 
         Photo photo = new Photo();
         photo
             .id(id)
-            .url(url)
+            .imageUrl(imageUrl)
+            .thumbUrl(thumbUrl)
             .comment(comment)
             .user(UserFactory.create(jsonObject.getJSONObject("user")));
 

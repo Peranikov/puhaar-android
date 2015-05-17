@@ -1,7 +1,6 @@
 package jp.peranikov.puhaar.views.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import jp.peranikov.puhaar.R;
 import jp.peranikov.puhaar.models.Photo;
@@ -49,13 +47,12 @@ public class PhotoAdapter extends ArrayAdapter<Photo> {
         }
 
         Photo photo = (Photo)getItem(position);
-        String url = photo.url();
 
         ImageLoader.ImageListener listener = ImageLoader.getImageListener(
                 holder.imageView,
                 android.R.drawable.spinner_background,
                 android.R.drawable.ic_dialog_alert);
-        mImageLoader.get(url, listener);
+        mImageLoader.get(photo.thumbUrl(), listener);
 
         holder.commentView.setText(photo.comment());
 
