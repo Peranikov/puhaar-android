@@ -1,6 +1,5 @@
 package jp.peranikov.puhaar;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -56,7 +55,7 @@ public class MainActivity
 
     @Override
     public void onClosePhotoDetailFragment() {
-        replacePhotoListFragment();
+        popBackStack();
     }
 
     private void replacePhotoListFragment() {
@@ -70,7 +69,12 @@ public class MainActivity
     private void replacePhotoDetailFragment(Photo photo) {
         PhotoDetailFragment photoDetailFragment = PhotoDetailFragment.newInstance(photo);
         getFragmentManager().beginTransaction()
-                .replace(R.id.FragmentContainer, photoDetailFragment )
+                .replace(R.id.FragmentContainer, photoDetailFragment)
+                .addToBackStack(null)
                 .commit();
+    }
+
+    private void popBackStack() {
+        getFragmentManager().popBackStack();
     }
 }
