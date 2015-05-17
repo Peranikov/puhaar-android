@@ -11,9 +11,12 @@ import jp.peranikov.puhaar.fragments.PhotoListFragment;
 import jp.peranikov.puhaar.models.Photo;
 
 
-public class MainActivity extends ActionBarActivity
-        implements PhotoListFragment.OnFragmentInteractionListener,
-        PhotoDetailFragment.OnFragmentInteractionListener {
+public class MainActivity
+        extends
+            ActionBarActivity
+        implements
+            PhotoListFragment.OnFragmentInteractionListener,
+            PhotoDetailFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,22 +54,23 @@ public class MainActivity extends ActionBarActivity
         replacePhotoDetailFragment(photo);
     }
 
+    @Override
+    public void onClosePhotoDetailFragment() {
+        replacePhotoListFragment();
+    }
+
     private void replacePhotoListFragment() {
         PhotoListFragment photoListFragment = PhotoListFragment.newInstance();
         getFragmentManager().beginTransaction()
-                .replace(R.id.photo_list_container, photoListFragment)
+                .add(R.id.FragmentContainer, photoListFragment)
+                .replace(R.id.FragmentContainer, photoListFragment)
                 .commit();
     }
 
     private void replacePhotoDetailFragment(Photo photo) {
         PhotoDetailFragment photoDetailFragment = PhotoDetailFragment.newInstance(photo);
         getFragmentManager().beginTransaction()
-                .replace(R.id.photo_list_container, photoDetailFragment )
+                .replace(R.id.FragmentContainer, photoDetailFragment )
                 .commit();
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }

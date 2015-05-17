@@ -1,9 +1,8 @@
 package jp.peranikov.puhaar.fragments;
 
 import android.app.Activity;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import jp.peranikov.puhaar.R;
 import jp.peranikov.puhaar.models.Photo;
 
@@ -22,13 +24,13 @@ import jp.peranikov.puhaar.models.Photo;
  * Use the {@link PhotoDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PhotoDetailFragment extends Fragment {
+public class PhotoDetailFragment extends Fragment{
 
     private OnFragmentInteractionListener mListener;
 
     private Photo mPhoto;
 
-    private ImageView mImageView;
+    @InjectView(R.id.imageview) ImageView mImageView;
 
     /**
      * Use this factory method to create a new instance of
@@ -62,15 +64,16 @@ public class PhotoDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_photo_detail, container, false);
-        mImageView = (ImageView)view.findViewById(R.id.imageview);
+        ButterKnife.inject(this, view);
+
         Glide.with(this).load(mPhoto.imageUrl()).into(mImageView);
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    @OnClick(R.id.CloseButton)
+    public void onCloseButtonPressed() {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onClosePhotoDetailFragment();
         }
     }
 
@@ -91,6 +94,12 @@ public class PhotoDetailFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -102,8 +111,9 @@ public class PhotoDetailFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onClosePhotoDetailFragment();
     }
+
+
 
 }
