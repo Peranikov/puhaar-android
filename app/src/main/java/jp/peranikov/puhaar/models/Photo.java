@@ -2,10 +2,12 @@ package jp.peranikov.puhaar.models;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 /**
  * Created by Yuto on 2015/05/04.
  */
-public class Photo {
+public class Photo implements Serializable {
     private Bitmap image;
     private String comment;
     private Integer id;

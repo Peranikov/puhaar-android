@@ -1,20 +1,26 @@
 package jp.peranikov.puhaar;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import jp.peranikov.puhaar.fragments.PhotoFragment;
+import jp.peranikov.puhaar.fragments.PhotoDetailFragment;
+import jp.peranikov.puhaar.fragments.PhotoListFragment;
+import jp.peranikov.puhaar.models.Photo;
 
 
-public class MainActivity extends ActionBarActivity implements PhotoFragment.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity
+        implements PhotoListFragment.OnFragmentInteractionListener,
+        PhotoDetailFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        request();
+
+        replacePhotoListFragment();
     }
 
     @Override
@@ -41,7 +47,26 @@ public class MainActivity extends ActionBarActivity implements PhotoFragment.OnF
 
 
     @Override
-    public void onFragmentInteraction(String id) {
+    public void onFragmentInteraction(Photo photo) {
+        replacePhotoDetailFragment(photo);
+    }
+
+    private void replacePhotoListFragment() {
+        PhotoListFragment photoListFragment = PhotoListFragment.newInstance();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.photo_list_container, photoListFragment)
+                .commit();
+    }
+
+    private void replacePhotoDetailFragment(Photo photo) {
+        PhotoDetailFragment photoDetailFragment = PhotoDetailFragment.newInstance(photo);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.photo_list_container, photoDetailFragment )
+                .commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }

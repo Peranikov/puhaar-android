@@ -1,16 +1,16 @@
 package jp.peranikov.puhaar.fragments;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,7 +29,6 @@ import java.util.ArrayList;
 
 import jp.peranikov.puhaar.AppController;
 import jp.peranikov.puhaar.R;
-
 import jp.peranikov.puhaar.factories.PhotoFactory;
 import jp.peranikov.puhaar.fragments.dummy.DummyContent;
 import jp.peranikov.puhaar.models.Photo;
@@ -44,7 +43,7 @@ import jp.peranikov.puhaar.views.adapters.PhotoAdapter;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class PhotoFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class PhotoListFragment extends Fragment implements AbsListView.OnItemClickListener {
     RequestQueue queue;
 
     private OnFragmentInteractionListener mListener;
@@ -60,8 +59,8 @@ public class PhotoFragment extends Fragment implements AbsListView.OnItemClickLi
      */
     private PhotoAdapter mAdapter;
 
-    public static PhotoFragment newInstance() {
-        PhotoFragment fragment = new PhotoFragment();
+    public static PhotoListFragment newInstance() {
+        PhotoListFragment fragment = new PhotoListFragment();
         return fragment;
     }
 
@@ -69,7 +68,7 @@ public class PhotoFragment extends Fragment implements AbsListView.OnItemClickLi
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public PhotoFragment() {
+    public PhotoListFragment() {
     }
 
     @Override
@@ -147,9 +146,13 @@ public class PhotoFragment extends Fragment implements AbsListView.OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
+
+            ListView listView = (ListView)parent;
+            Photo photo = (Photo)listView.getItemAtPosition(position);
+
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(photo);
         }
     }
 
@@ -178,7 +181,7 @@ public class PhotoFragment extends Fragment implements AbsListView.OnItemClickLi
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        public void onFragmentInteraction(Photo photo);
     }
 
 }
